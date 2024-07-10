@@ -1,13 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
+
 import PromptCard from "./PromptCard";
 
 const PromptCardList = ({ data, handleTagClick }) => {
-  if (!data.length) {
-    return <p>Loading...</p>;
-  }
-
   return (
     <div className="mt-16 prompt_layout">
       {data.map((post) => (
@@ -32,6 +29,7 @@ const Feed = () => {
 
   const fetchPosts = async () => {
     setLoading(true); // بدء التحميل
+
     const response = await fetch("/api/prompt");
     const data = await response.json();
 
@@ -89,6 +87,11 @@ const Feed = () => {
       {/* All Prompts */}
       {loading ? (
         <p>Loading...</p>
+      ) : searchText ? (
+        <PromptCardList
+          data={searchedResults}
+          handleTagClick={handleTagClick}
+        />
       ) : (
         <PromptCardList data={allPosts} handleTagClick={handleTagClick} />
       )}
