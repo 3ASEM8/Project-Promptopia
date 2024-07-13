@@ -20,7 +20,6 @@ const PromptCardList = ({ data, handleTagClick }) => {
 
 const Feed = () => {
   const [allPosts, setAllPosts] = useState([]);
-  const [loading, setLoading] = useState(true); // حالة التحميل
 
   // Search states
   const [searchText, setSearchText] = useState("");
@@ -28,13 +27,10 @@ const Feed = () => {
   const [searchedResults, setSearchedResults] = useState([]);
 
   const fetchPosts = async () => {
-    setLoading(true); // بدء التحميل
-
     const response = await fetch("/api/prompt");
     const data = await response.json();
 
     setAllPosts(data);
-    setLoading(false); // انتهاء التحميل
   };
 
   useEffect(() => {
@@ -85,9 +81,7 @@ const Feed = () => {
       </form>
 
       {/* All Prompts */}
-      {loading ? (
-        <p>Loading...</p>
-      ) : searchText ? (
+      {searchText ? (
         <PromptCardList
           data={searchedResults}
           handleTagClick={handleTagClick}
